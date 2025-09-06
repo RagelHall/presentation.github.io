@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Браток Маратик - Инвестиционный меморандум</title>
+    <style>
+        /* Базовые стили и сброс */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a1a1a;
+            --secondary: #ff3e7f;
+            --accent: #6a5acd;
+            --light: #f5f5f5;
+            --dark: #0d0d0d;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: var(--primary);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 62, 127, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(106, 90, 205, 0.1) 0%, transparent 20%);
+        }
+
+        /* Контейнеры и секции */
+        .slide {
+            min-height: 100vh;
+            padding: 4rem 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Декоративные элементы */
+        .chaos-element {
+            position: absolute;
+            opacity: 0.3;
+            z-index: 1;
+        }
+
+        .circle {
+            border-radius: 50%;
+            border: 1px solid var(--secondary);
+        }
+
+        .square {
+            border: 1px solid var(--accent);
+            transform: rotate(45deg);
+        }
+
+        .line {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--secondary), transparent);
+        }
+
+        /* Типографика */
+        h1, h2, h3 {
+            margin-bottom: 1.5rem;
+            text-align: center;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            color: var(--secondary);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: 2.8rem;
+            color: var(--accent);
+            margin-bottom: 2rem;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            color: var(--secondary);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+
+        p {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            text-align:start;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 1.5rem;
+        }
+
+        li {
+            font-size: 1.5rem;
+            margin-bottom: 0.8rem;
+            position: relative;
+        }
+
+        li:before {
+            content: "■";
+            color: var(--secondary);
+            position: absolute;
+            left: -1.5rem;
+        }
+
+        /* Логотип и изображения */
+        .logo-container {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 2rem auto;
+            border: 3px solid var(--secondary);
+            box-shadow: 0 0 20px rgba(255, 62, 127, 0.5);
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo-placeholder {
+            width: 100%;
+            height: 100%;
+            background-color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--light);
+            font-size: 0.9rem;
+            text-align: center;
+            padding: 1rem;
+        }
+
+        /* Навигация */
+        .navigation {
+            position: fixed;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.3);
+            border: 1px solid var(--secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-dot.active {
+            background-color: var(--secondary);
+            transform: scale(1.3);
+        }
+
+        /* Специфические стили для слайдов */
+        #title-slide {
+            text-align: center;
+        }
+
+        #title-slide h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        #title-slide h2 {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .slogan {
+            font-style: italic;
+            font-size: 1.2rem;
+            color: var(--accent);
+            margin-top: 2rem;
+        }
+
+        .two-columns {
+            display: flex;
+            gap: 3rem;
+        }
+
+        .column {
+            flex: 1;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 2rem;
+            }
+            
+            .slide {
+                padding: 3rem 1.5rem;
+            }
+            
+            .two-columns {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            
+            .navigation {
+                right: 1rem;
+            }
+            
+            .logo-container {
+                width: 150px;
+                height: 150px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 1.7rem;
+            }
+            
+            .slide {
+                padding: 2rem 1rem;
+            }
+            
+            .logo-container {
+                width: 120px;
+                height: 120px;
+            }
+        }
+
+        /* Анимации */
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+
+        .animated {
+            animation: float 5s ease-in-out infinite;
+        }
+
+        .pulse {
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+.chaos-element {
+    filter: blur(1px);
+    mix-blend-mode: screen;
+}
+
+.circle {
+    box-shadow: 0 0 20px var(--secondary), inset 0 0 10px var(--secondary);
+}
+
+.square {
+    box-shadow: 0 0 20px var(--accent), inset 0 0 10px var(--accent);
+}
+
+.line {
+    box-shadow: 0 0 15px var(--secondary);
+}
+  
+body {
+    background: radial-gradient(circle at 10% 20%, rgba(255,62,127,0.15), transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(106,90,205,0.15), transparent 40%),
+                linear-gradient(135deg, #0d0d0d, #1a1a1a, #0d0d0d);
+    background-size: 200% 200%;
+    animation: gradientShift 15s ease infinite;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@media (max-width: 480px) {
+    .chaos-element {
+        display: none;
+    }
+}
+
+.container {
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 0 20px rgba(255,62,127,0.2);
+}
+
+.nav-dot {
+    width: 16px;
+    height: 16px;
+}
+.nav-dot.active {
+    box-shadow: 0 0 8px var(--secondary);
+}
+
+li:hover {
+    color: var(--accent);
+    transform: translateX(5px);
+    transition: 0.3s;
+}
+li:hover::after {
+    content: " ✨";
+}
+
+h2 {
+    animation: glitch 3s infinite;
+}
+@keyframes glitch {
+    0% { text-shadow: 2px 2px var(--secondary); }
+    50% { text-shadow: -2px -2px var(--accent); }
+    100% { text-shadow: 2px 2px var(--secondary); }
+}
+
+    </style>
+</head>
+<body>
+    <!-- Навигация -->
+    <div class="navigation">
+        <div class="nav-dot active" data-target="title-slide"></div>
+        <div class="nav-dot" data-target="executive-summary"></div>
+        <div class="nav-dot" data-target="competencies"></div>
+        <div class="nav-dot" data-target="financial-model"></div>
+        <div class="nav-dot" data-target="risk-analysis"></div>
+        <div class="nav-dot" data-target="requirements"></div>
+        <div class="nav-dot" data-target="team"></div>
+        <div class="nav-dot" data-target="why-you"></div>
+        <div class="nav-dot" data-target="advantages"></div>
+        <div class="nav-dot" data-target="contact"></div>
+    </div>
+
+    <!-- Слайд 1: Титульный -->
+    <section id="title-slide" class="slide">
+        <div class="chaos-element circle" style="width: 300px; height: 300px; top: -100px; left: -100px;"></div>
+        <div class="chaos-element square" style="width: 200px; height: 200px; bottom: -50px; right: -50px;"></div>
+        <div class="chaos-element line" style="width: 400px; top: 50%; left: -100px;"></div>
+        
+        <div class="container">
+            <h1>Инвестиционный меморандум проекта «Браток Маратик»</h1>
+            <h2>Версия 1.0 (для закрытого ознакомления)</h2>
+            
+
+            <p class="slogan">«High risk, high reward»</p>
+        </div>
+    </section>
+
+    <!-- Слайд 2: Исполнительное резюме -->
+    <section id="executive-summary" class="slide">
+        <div class="chaos-element circle pulse" style="width: 150px; height: 150px; top: 20%; right: 10%;"></div>
+        <div class="chaos-element line" style="width: 300px; bottom: 30%; left: -100px;"></div>
+        
+        <div class="container">
+            <h2>Исполнительное резюме (The Pitch)</h2>
+            
+            <h3>Тезис</h3>
+            <p>Вам предлагается стать эксклюзивным инвестором в высоковолатильный, но перспективный актив.</p>
+            
+            <h3>Суть</h3>
+            <p>Проект представляет собой сочетание мощного интеллектуального ядра, беспрецедентной воли и уникального опыта, выкованного в нестандартных условиях.</p>
+            
+            <h3>Предложение</h3>
+            <p>Долгосрочное партнёрство на основе взаимного уважения, честности и стратегического альянса.</p>
+        </div>
+    </section>
+
+    <!-- Слайд 3: Ключевые компетенции -->
+    <section id="competencies" class="slide">
+        <div class="chaos-element square" style="width: 250px; height: 250px; top: 10%; left: 5%;"></div>
+        <div class="chaos-element circle animated" style="width: 180px; height: 180px; bottom: 20%; right: 10%;"></div>
+        
+        <div class="container">
+            <h2>Ключевые компетенции (Мои плюсы)</h2>
+            
+            <ul>
+                <li><strong>Сила воли и надёжность:</strong> Прошедший армию и построивший карьеру с нуля. Если даю слово — делаю. Не сбегу при первых трудностях.</li>
+                <li><strong>Глубина и интеллект:</strong> Со мной не будет скучно. Готов говорить о смыслах, вселенной, истории и ваших личных проектах часами. Идеальный партнёр для мозгового штурма.</li>
+                <li><strong>Абсолютная преданность:</strong> Если вы проходите в мой «ближний круг», моя лояльность становится безграничной. Я буду горой стоять за своих.</li>
+                <li><strong>Развитое системное мышление:</strong> Вижу проблемы комплексно и умею находить неочевидные решения. Сломался кран? Оптимизирую бюджет? Нужна новая IT-система? Я ваш человек.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Слайд 4: Финансовая модель -->
+    <section id="financial-model" class="slide">
+        <div class="chaos-element line" style="width: 400px; top: 40%; left: -200px;"></div>
+        <div class="chaos-element square pulse" style="width: 120px; height: 120px; bottom: 15%; left: 15%;"></div>
+        
+        <div class="container">
+            <h2>Финансовая модель (Ещё плюсы)</h2>
+            
+            <div class="two-columns">
+                <div class="column">
+                    <h3>Финансовая ответственность</h3>
+                    <p>Не трачу деньги на глупости. Умею планировать бюджет.</p>
+                    
+                    <h3>Самостоятельность</h3>
+                    <p>Не жду, что кто-то придёт и решит мои проблемы. Беру ответственность на себя.</p>
+                </div>
+                
+                <div class="column">
+                    <h3>Перспективы роста</h3>
+                    <p>Проект находится на стадии активного роста: ВУЗ и карьера. Потенциал к увеличению стоимости актива крайне высок.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Слайд 5: Анализ рисков -->
+    <section id="risk-analysis" class="slide">
+        <div class="chaos-element circle" style="width: 220px; height: 220px; top: -50px; right: -50px;"></div>
+        <div class="chaos-element line" style="width: 350px; bottom: 20%; right: -150px;"></div>
+        
+        <div class="container">
+            <h2>Анализ рисков (Ваши минусы — подано как «Зоны роста»)</h2>
+            
+            <ul>
+                <li><strong>Гиперконтроль:</strong> Склонность всё систематизировать и иногда чрезмерно оптимизировать, включая личные отношения. Может требоваться напоминание: «Расслабься, тут не нужен перфекционизм».</li>
+                <li><strong>Склонность к изоляции:</strong> Периодически могу уходить в свой «мрак» или погружаться в работу с головой. Не потому что что-то не так, а таков процесс перезагрузки. Требует понимания.</li>
+                <li><strong>Сложность с вербализацией чувств:</strong> Моя любовь проявляется в действиях (починил, придумал, защитил), а не в словах. Прямые вопросы работают лучше, чем ожидание красивых признаний.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Слайд 6: Технические требования -->
+    <section id="requirements" class="slide">
+        <div class="chaos-element square animated" style="width: 180px; height: 180px; top: 20%; left: 10%;"></div>
+        <div class="chaos-element circle pulse" style="width: 250px; height: 250px; bottom: -100px; right: -100px;"></div>
+        
+        <div class="container">
+            <h2>Технические требования (Что мне нужно от партнёра)</h2>
+            
+            <ul>
+                <li><strong>Прямота и честность:</strong> Со мной нужно говорить начистоту. Я не считываю намёки и не играю в игры.</li>
+                <li><strong>Личное пространство:</strong> Уважение к моим личным проектам и потребности в периодическом уединении для перезарядки.</li>
+                <li><strong>Терпение:</strong> Некоторые процессы (полное доверие, откровенность) требуют времени. Я не открываюсь с первого свидания.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Слайд 7: Команда проекта -->
+    <section id="team" class="slide">
+        <div class="chaos-element line" style="width: 500px; top: 30%; left: -300px;"></div>
+        <div class="chaos-element square" style="width: 150px; height: 150px; bottom: 20%; right: 20%;"></div>
+        
+        <div class="container">
+            <h2>Команда проекта</h2>
+            
+            <ul>
+                <li><strong>Основатель и CEO:</strong> Марат (я сам)</li>
+                <li><strong>Главный архитектор:</strong> Мой интеллект</li>
+                <li><strong>Директор по безопасности:</strong> Мой внутренний Часовой (иногда слишком усердствует)</li>
+                <li><strong>Вакансия:</strong> Со-основатель и стратегический партнёр.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Слайд 8: Почему именно вы? -->
+    <section id="why-you" class="slide">
+        <div class="chaos-element circle animated" style="width: 200px; height: 200px; top: 15%; right: 15%;"></div>
+        <div class="chaos-element line" style="width: 400px; bottom: 25%; right: -200px;"></div>
+        
+        <div class="container">
+            <h2>Почему именно Вы?</h2>
+            
+            <ul>
+                <li>Вы уже прошли первое собеседование и показали excellent results.</li>
+                <li>Вы вызываете не только интерес, но и чувство, что с вами можно выстроить прочный стратегический альянс.</li>
+                <li>Мой внутренний «Часовой», обычно всех отвергающий, проявил к вам нехарактерный интерес.</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Слайд 9: Конкурентные преимущества -->
+    <section id="advantages" class="slide">
+        <div class="chaos-element square pulse" style="width: 220px; height: 220px; top: 10%; left: 5%;"></div>
+        <div class="chaos-element circle" style="width: 180px; height: 180px; bottom: 15%; right: 10%;"></div>
+        
+        <div class="container">
+            <h2>Конкурентные преимущества (Что Вы получите)</h2>
+            
+            <div class="two-columns">
+                <div class="column">
+                    <ul>
+                        <li>Не просто парня, а верного союзника на всех фронтах жизни.</li>
+                        <li>Глубокую, осмысленную связь, а не поверхностные отношения.</li>
+                    </ul>
+                </div>
+                
+                <div class="column">
+                    <ul>
+                        <li>Ощущение абсолютной защищённости и надёжного тыла.</li>
+                        <li>Эксклюзивный доступ к уникальному внутреннему миру.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Слайд 10: Контактная информация -->
+    <section id="contact" class="slide">
+        <div class="chaos-element line" style="width: 600px; top: 40%; left: -400px;"></div>
+        <div class="chaos-element square animated" style="width: 150px; height: 150px; bottom: 10%; right: 15%;"></div>
+        
+        <div class="container">
+            <h2>Контактная информация для инвестиций</h2>
+            
+            <h3>Следующий шаг: Второе свидание.</h3>
+            
+            <ul>
+                <li><strong>Дата и время:</strong> 09.09.2025. После 18:00.</li>
+                <li><strong>Место:</strong> Твой дом</li>
+                <li><strong>Дресс-код:</strong> Отсутствует. Будьте собой.</li>
+            </ul>
+            
+            <p class="slogan">P.S.: Готов ответить на все ваши вопросы</p>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Создание дополнительных хаотических элементов
+            function createChaosElements() {
+                const slides = document.querySelectorAll('.slide');
+                const elements = ['circle', 'square', 'line'];
+                const animations = ['', 'animated', 'pulse'];
+                
+                slides.forEach(slide => {
+                    const elementsCount = Math.floor(Math.random() * 2) + 2; // 2-3 элемента на слайд
+                    
+                    for (let i = 0; i < elementsCount; i++) {
+                        const elementType = elements[Math.floor(Math.random() * elements.length)];
+                        const animation = animations[Math.floor(Math.random() * animations.length)];
+                        
+                        const element = document.createElement('div');
+                        element.classList.add('chaos-element', elementType);
+                        if (animation) element.classList.add(animation);
+                        
+                        // Случайное позиционирование
+                        const size = Math.floor(Math.random() * 150) + 50;
+                        const posX = Math.floor(Math.random() * 100);
+                        const posY = Math.floor(Math.random() * 100);
+                        
+                        element.style.width = elementType === 'line' ? `${size}px` : `${size}px`;
+                        element.style.height = elementType === 'line' ? '1px' : `${size}px`;
+                        element.style.left = `${posX}%`;
+                        element.style.top = `${posY}%`;
+                        
+                        slide.appendChild(element);
+                    }
+                });
+            }
+            
+            createChaosElements();
+            
+            // Навигация по слайдам
+            const dots = document.querySelectorAll('.nav-dot');
+            const sections = document.querySelectorAll('.slide');
+            
+            function updateActiveDot() {
+                const scrollPosition = window.scrollY + window.innerHeight / 2;
+                
+                sections.forEach((section, index) => {
+                    const sectionTop = section.offsetTop;
+                    const sectionBottom = sectionTop + section.offsetHeight;
+                    
+                    if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                        dots.forEach(dot => dot.classList.remove('active'));
+                        dots[index].classList.add('active');
+                    }
+                });
+            }
+            
+            // Прокрутка к секции при клике на точку
+            dots.forEach((dot, index) => {
+                dot.addEventListener('click', () => {
+                    sections[index].scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+            
+            // Обновление активной точки при прокрутке
+            window.addEventListener('scroll', updateActiveDot);
+            updateActiveDot(); // Инициализация
+            
+            // Параллакс эффект для декоративных элементов
+            window.addEventListener('scroll', () => {
+                const chaosElements = document.querySelectorAll('.chaos-element');
+                const scrollY = window.scrollY;
+                
+                chaosElements.forEach(element => {
+                    const speed = 0.2;
+                    const yPos = -(scrollY * speed);
+                    element.style.transform = `translateY(${yPos}px) ${element.style.transform}`;
+                });
+            });
+        });
+    </script>
+</body>
+</html>
